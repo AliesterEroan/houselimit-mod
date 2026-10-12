@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>HouseLimitMod</AssemblyName>
+    <Description>Increases the house limit in Sun Haven</Description>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <Authors>Aliester Eroan</Authors>
+    <Company>Aliester Eroan</Company>
+    <Product>Sun Haven House Limit Mod</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Update these paths to match your Sun Haven installation -->
+    <Reference Include="BepInEx.Core">
+      <HintPath>D:\personal\games\SteamUnlocked\Sun.Haven.v3.1.3b.ALL.DLC\Sun.Haven.v3.1.3b.ALL.DLC\BepInEx\core\BepInEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>D:\personal\games\SteamUnlocked\Sun.Haven.v3.1.3b.ALL.DLC\Sun.Haven.v3.1.3b.ALL.DLC\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>D:\personal\games\SteamUnlocked\Sun.Haven.v3.1.3b.ALL.DLC\Sun.Haven.v3.1.3b.ALL.DLC\Sun Haven_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>D:\personal\games\SteamUnlocked\Sun.Haven.v3.1.3b.ALL.DLC\Sun.Haven.v3.1.3b.ALL.DLC\Sun Haven_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>D:\personal\games\SteamUnlocked\Sun.Haven.v3.1.3b.ALL.DLC\Sun.Haven.v3.1.3b.ALL.DLC\Sun Haven_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;D:\personal\games\SteamUnlocked\Sun.Haven.v3.1.3b.ALL.DLC\Sun.Haven.v3.1.3b.ALL.DLC\BepInEx\plugins\HouseLimitMod.dll&quot;" />
+  </Target>
+
+</Project>

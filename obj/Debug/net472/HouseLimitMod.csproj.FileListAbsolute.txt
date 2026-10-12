@@ -1,0 +1,9 @@
+E:\Projects\SunHavenHouseLimitMod\obj\Debug\net472\HouseLimitMod.csproj.AssemblyReference.cache
+E:\Projects\SunHavenHouseLimitMod\obj\Debug\net472\HouseLimitMod.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\SunHavenHouseLimitMod\obj\Debug\net472\HouseLimitMod.AssemblyInfoInputs.cache
+E:\Projects\SunHavenHouseLimitMod\obj\Debug\net472\HouseLimitMod.AssemblyInfo.cs
+E:\Projects\SunHavenHouseLimitMod\obj\Debug\net472\HouseLimitMod.csproj.CoreCompileInputs.cache
+E:\Projects\SunHavenHouseLimitMod\bin\Debug\net472\HouseLimitMod.dll
+E:\Projects\SunHavenHouseLimitMod\bin\Debug\net472\HouseLimitMod.pdb
+E:\Projects\SunHavenHouseLimitMod\obj\Debug\net472\HouseLimitMod.dll
+E:\Projects\SunHavenHouseLimitMod\obj\Debug\net472\HouseLimitMod.pdb
