@@ -34,14 +34,17 @@ A BepInEx mod that removes the restrictive house limit in Sun Haven, allowing yo
 
 ### Installation
 
-#### Option 1: Pre-built DLL (Recommended)
+#### Quick Install (Recommended)
 
-1. Download the latest `HouseLimitMod.dll` from [Releases](https://github.com/AliesterEroan/SunHavenHouseLimitMod/releases)
-2. Place it in your game's BepInEx plugins folder:
+1. Download the latest release from [GitHub Releases](https://github.com/AliesterEroan/houselimit-mod/releases)
+2. Extract the zip file
+3. Copy `HouseLimitMod.dll` to your game's BepInEx plugins folder:
    ```
    Sun Haven\BepInEx\plugins\HouseLimitMod.dll
    ```
-3. Launch the game - the mod will load automatically
+4. Launch the game - the mod will load automatically
+
+#### Option 2: Build from Source
 
 #### Option 2: Build from Source
 
@@ -71,6 +74,10 @@ A BepInEx mod that removes the restrictive house limit in Sun Haven, allowing yo
    ```bash
    copy bin\Debug\net472\HouseLimitMod.dll "YOUR_SUN_HAVEN_PATH\BepInEx\plugins\"
    ```
+
+## 📥 Download
+
+Get the latest release from: [GitHub Releases](https://github.com/AliesterEroan/houselimit-mod/releases)
 
 ## ⚙️ Configuration
 
