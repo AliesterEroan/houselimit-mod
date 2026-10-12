@@ -2,6 +2,16 @@
 
 **Unlock Unlimited Building Potential in Sun Haven**
 
+## About Sun Haven
+
+Sun Haven is a fantasy farming sim developed by Pixel Sprout Studios. Build your farm and relationships with townsfolk, or forge ahead on a quest of magic, monsters, and dragons. Level up through a skill tree in 8-person multiplayer, or adventure solo! Features pixel graphics, RPG elements, dating sim mechanics, and much more.
+
+[Get Sun Haven on Steam](https://store.steampowered.com/app/1432860/Sun_Haven/)
+
+---
+
+## About This Mod
+
 A BepInEx mod that removes the restrictive house limit in Sun Haven, allowing you to build as many houses as you want. Replace the hardcoded limit of 8 with a configurable value (default: 999) and expand your town without boundaries.
 
 ## 🌟 Features
