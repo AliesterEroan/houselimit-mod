@@ -140,4 +140,4 @@ No LICENSE file is present in this repository — **all rights reserved** by the
 
 ---
 
-*Built by Aliester Eroan.*
+*Built with ❤️ by AliesterEroan*
