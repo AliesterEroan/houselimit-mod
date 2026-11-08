@@ -1,242 +1,143 @@
-# House Limit Mod 🏠
+# House Limit Mod
 
-**Unlock Unlimited Building Potential in Sun Haven**
+**A BepInEx plugin for Sun Haven that raises the hardcoded 8-house limit to any configured value (default: 999).**
 
-## About Sun Haven
-
-Sun Haven is a fantasy farming sim developed by Pixel Sprout Studios. Build your farm and relationships with townsfolk, or forge ahead on a quest of magic, monsters, and dragons. Level up through a skill tree in 8-person multiplayer, or adventure solo! Features pixel graphics, RPG elements, dating sim mechanics, and much more.
-
-[Get Sun Haven on Steam](https://store.steampowered.com/app/1432860/Sun_Haven/)
+> Sun Haven is a fantasy farming sim by Pixel Sprout Studios — solo or 8-player co-op, with farming, quests, and magic. This mod removes the restrictive cap on how many houses you can build.
 
 ---
 
-## About This Mod
+## 📜 Table of Contents
 
-A BepInEx mod that removes the restrictive house limit in Sun Haven, allowing you to build as many houses as you want. Replace the hardcoded limit of 8 with a configurable value (default: 999) and expand your town without boundaries.
+- [✨ Features](#-features)
+- [🚀 Installation](#-installation)
+- [⚙️ Settings](#-settings)
+- [🏗️ Architecture](#-architecture)
+- [🛠️ Technologies Used](#-technologies-used)
+- [⚠️ Limitations](#-limitations)
+- [📜 License](#-license)
+- [🙏 Acknowledgments](#-acknowledgments)
+- [📧 Contact](#-contact)
 
-## 🌟 Features
+---
 
-- **🔧 Configurable Limit** - Set your desired house limit via BepInEx config file
-- **🎯 Harmony Patches** - Clean runtime patching using Harmony library
-- **🔄 Comprehensive Coverage** - Patches all hardcoded house limit checks in the game
-- **🛡️ Safe & Reversible** - Simply delete the DLL to disable - no permanent changes
-- **📝 Runtime Configuration** - Change the limit without recompiling
-- **⚡ Lightweight** - Minimal performance impact
+## ✨ Features
 
-## 🚀 Getting Started
+- **Configurable house limit** - `Max Houses` setting (default 999), editable at runtime via the BepInEx config file
+- **Runtime patching** - Harmony transpilers rewrite the hardcoded `8`/`7` constants at game startup; no game files are modified
+- **Comprehensive coverage** - patches both `Wish.PlayerHouse` (limit property, meta, scene loading) and `Wish.HousePlaceable` (placement checks and slot assignment)
+- **Safe & reversible** - delete the DLL to disable; existing saves keep working
+- **Lightweight** - single-file plugin, negligible performance impact
+
+---
+
+## 🚀 Installation
 
 ### Prerequisites
+- Sun Haven (Steam or GOG)
+- [BepInEx 5.4](https://bepinex.com) already installed in the game directory (run the game once so it generates `BepInEx/`)
+- A prebuilt `HouseLimitMod.dll` (in `release/` or the `HouseLimitMod-v1.0.0.zip` package)
 
-- **Sun Haven** (Steam or GOG version)
-- **BepInEx** - Already installed in your game directory
-- **.NET SDK 8.0** - For building the mod (optional if using pre-built DLL)
-- **Visual Studio / VS Code / Rider** - For development (optional)
-
-### Installation
-
-#### Quick Install (Recommended)
-
-1. Download the latest release from [GitHub Releases](https://github.com/AliesterEroan/houselimit-mod/releases)
-2. Extract the zip file
-3. Copy `HouseLimitMod.dll` to your game's BepInEx plugins folder:
+### Steps
+1. Copy `HouseLimitMod.dll` into:
    ```
    Sun Haven\BepInEx\plugins\HouseLimitMod.dll
    ```
-4. Launch the game - the mod will load automatically
+2. Launch the game — the mod loads automatically. Check `BepInEx\LogOutput.log` for `House Limit Mod loaded successfully!`.
+3. After the first run, edit `BepInEx\config\houselimit.cfg` to change the limit, then restart the game.
 
-#### Option 2: Build from Source
-
-#### Option 2: Build from Source
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/AliesterEroan/SunHavenHouseLimitMod.git
-   cd SunHavenHouseLimitMod
-   ```
-
-2. **Install .NET SDK 8.0** (if not already installed)
-   ```bash
-   winget install Microsoft.DotNet.SDK.8
-   ```
-
-3. **Update DLL paths in `HouseLimitMod.csproj`**
-   - Open `HouseLimitMod.csproj`
-   - Update the `<HintPath>` values to point to your Sun Haven installation
-   - The current paths are set to: `D:\personal\games\SteamUnlocked\Sun.Haven.v3.1.3b.ALL.DLC\Sun.Haven.v3.1.3b.ALL.DLC\`
-   - Update these to match your game installation path
-
-4. **Build the project**
+### Build from source
+1. Clone the repository.
+2. Install the .NET SDK (`winget install Microsoft.DotNet.SDK.8`).
+3. Edit `HouseLimitMod.csproj` — the `<HintPath>` references point at a specific Sun Haven install (`D:\personal\games\...`); update them to your game directory's `BepInEx\core\` and `Sun Haven_Data\Managed\` folders.
+4. Build:
    ```bash
    dotnet build
    ```
+   The post-build step auto-copies the DLL into `BepInEx\plugins\`.
 
-5. **Copy the DLL to your game** (if auto-copy is disabled)
-   ```bash
-   copy bin\Debug\net472\HouseLimitMod.dll "YOUR_SUN_HAVEN_PATH\BepInEx\plugins\"
-   ```
+---
 
-## 📥 Download
+## ⚙️ Settings
 
-Get the latest release from: [GitHub Releases](https://github.com/AliesterEroan/houselimit-mod/releases)
+`BepInEx\config\houselimit.cfg`:
 
-## ⚙️ Configuration
+- **`Max Houses`** - int (default: `999`) — maximum number of houses allowed. Houses are 0-indexed, so internal clamps use `Max Houses - 1`.
 
-After running the game once, a config file will be created at:
-```
-BepInEx\config\houselimit.cfg
-```
+Suggested values: 50–100 for small towns, 100–500 for medium, 500–999 for large; 1000+ may cause performance issues.
 
-Edit this file to change the house limit:
-```ini
-[General]
-## Maximum number of houses allowed (default: 999)
-Max Houses = 999
-```
+---
 
-**Recommended values:**
-- **Small towns:** 50-100
-- **Medium towns:** 100-500
-- **Large towns:** 500-999
-- **Extreme:** 1000+ (may cause performance issues)
-
-## 📁 Project Structure
+## 🏗️ Architecture
 
 ```
-SunHavenHouseLimitMod/
-├── HouseLimitMod.cs          # Main mod code with Harmony patches
-├── HouseLimitMod.csproj      # .NET project configuration
-├── README.md                 # This file
-└── bin/
-    └── Debug/
-        └── net472/
-            └── HouseLimitMod.dll  # Compiled mod DLL
+├── HouseLimitMod.cs       # Plugin entry point + Harmony transpilers
+├── HouseLimitMod.csproj   # net472 project; game DLL references + post-build copy
+├── release/               # Prebuilt DLL + INSTALL.txt
+└── HouseLimitMod-v1.0.0.zip
 ```
+
+### Patched methods
+| Method | Original constant | Patched to |
+|---|---|---|
+| `PlayerHouse.MaxNumber` getter | `8` | `Max Houses` |
+| `PlayerHouse.SetMeta` | `7` | `Max Houses - 1` |
+| `PlayerHouse.Build` | `7` | `Max Houses - 1` |
+| `PlayerHouse.SceneToLoad` | `7` | `Max Houses - 1` |
+| `PlayerHouse.GetHouseSceneIndex` | `7` | `Max Houses - 1` |
+| `HousePlaceable.PlaceDecoration` | `8` | `Max Houses` |
+| `HousePlaceable.Use1` | `8` | `Max Houses` |
+| `HousePlaceable.ModifyMeta` | `8` | `Max Houses` |
+
+### Data flow
+1. BepInEx loads `HouseLimitMod.dll` → `Awake()` binds the config entry.
+2. Harmony transpilers replace `ldc.i4.8` / `ldc.i4.7` opcodes with calls to `GetMaxHouses()` / `GetMaxHousesMinusOne()`.
+3. All patched checks read the live config value at runtime.
+
+---
 
 ## 🛠️ Technologies Used
 
 ### Core
-- **C#** - Programming language
-- **.NET Framework 4.7.2** - Target framework
-- **.NET SDK 8.0** - Build tooling
+- **C# / .NET Framework 4.7.2** - mod implementation (built with .NET SDK 8)
+- **BepInEx 5.4** - Unity mod loader
+- **Harmony (0Harmony)** - runtime IL patching via transpilers
+- **Mono.Cecil / AccessTools** - type and method resolution
 
-### Modding Framework
-- **BepInEx 5.4** - Unity/mono modding framework
-- **Harmony** - Runtime method patching library
-- **Mono.Cecil** - IL code manipulation
-
-### Game References
-- **Assembly-CSharp.dll** - Sun Haven's main game assembly
-- **UnityEngine.dll** - Unity engine core
-- **UnityEngine.CoreModule.dll** - Unity core module
-
-## 🎯 How It Works
-
-The mod uses Harmony transpilers to modify hardcoded values at runtime:
-
-1. **MaxNumber Property** - Replaces the hardcoded return value of `8` with your configured limit
-2. **SetMeta Method** - Replaces `Mathf.Min(playerNumber, 7)` with `Mathf.Min(playerNumber, maxHouses-1)`
-3. **Build Method** - Replaces `Mathf.Min(playerNumber, 7)` with `Mathf.Min(playerNumber, maxHouses-1)`
-4. **SceneToLoad Method** - Replaces `Mathf.Min(houseNumber, 7)` with `Mathf.Min(houseNumber, maxHouses-1)`
-5. **GetHouseSceneIndex Method** - Replaces `Mathf.Min(playerNumber, 7)` with `Mathf.Min(playerNumber, maxHouses-1)`
-6. **HousePlaceable.PlaceDecoration** - Replaces the hardcoded `8` check that prevents placing houses
-7. **HousePlaceable.Use1** - Replaces the hardcoded `8` check that shows the placement warning
-8. **HousePlaceable.ModifyMeta** - Replaces the hardcoded `8` loop limit for house slot assignment
-
-All patches are applied at game startup and are completely reversible.
-
-## 🧪 Development
-
-### Building
-
-```bash
-# Build the project
-dotnet build
-
-# Build in release mode
-dotnet build --configuration Release
-```
-
-### Code Quality
-
-```bash
-# Analyze code
-dotnet analyze
-
-# Format code
-dotnet format
-```
-
-## 🔧 Troubleshooting
-
-### Mod doesn't load
-
-1. Check `BepInEx\LogOutput.log` for errors
-2. Verify BepInEx is properly installed (run the game once without mods)
-3. Ensure `HouseLimitMod.dll` is in the correct folder: `BepInEx\plugins\`
-4. Check that all game DLL references in `.csproj` point to correct paths
-
-### House limit not changed
-
-1. Verify the config file exists and has your desired value
-2. Restart the game after changing the config
-3. Check the log for "House Limit Mod loaded!" message
-
-### Game crashes on startup
-
-1. Remove the mod DLL and try again
-2. Check the log for specific error messages
-3. Try a lower house limit value (e.g., 50 instead of 9999)
-
-## 📝 Technical Details
-
-### Harmony Patch Locations
-
-| Method | Original Value | Patched Value | Purpose |
-|--------|---------------|---------------|---------|
-| `PlayerHouse.MaxNumber.get` | `8` | `configMaxHouses.Value` | Main house limit |
-| `PlayerHouse.SetMeta` | `7` | `configMaxHouses.Value - 1` | Player number clamping |
-| `PlayerHouse.Build` | `7` | `configMaxHouses.Value - 1` | Portal house number |
-| `PlayerHouse.SceneToLoad` | `7` | `configMaxHouses.Value - 1` | Scene name generation |
-| `PlayerHouse.GetHouseSceneIndex` | `7` | `configMaxHouses.Value - 1` | Scene index lookup |
-| `HousePlaceable.PlaceDecoration` | `8` | `configMaxHouses.Value` | Placement limit check |
-| `HousePlaceable.Use1` | `8` | `configMaxHouses.Value` | Placement warning check |
-| `HousePlaceable.ModifyMeta` | `8` | `configMaxHouses.Value` | House slot loop limit |
-
-### Why `maxHouses - 1`?
-
-House numbers are 0-indexed (0 to max-1), so if you want 999 houses, the valid range is 0-998, hence the `-1` adjustment.
-
-## ⚠️ Known Limitations
-
-- **UI:** The game UI may not display house numbers beyond the original limit properly
-- **Performance:** Very high limits (1000+) may cause performance issues in large towns
-- **Multiplayer:** All players must have the mod installed for consistency
-- **Save Files:** Existing saves with houses at the old limit should work fine
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-##  Acknowledgments
-
-- **BepInEx Team** - For the excellent Unity modding framework
-- **Harmony Team** - For the powerful runtime patching library
-- **Pixelated Milk** - For creating Sun Haven
-- **Sun Haven Modding Community** - For inspiration and techniques
-
-## 📧 Contact
-
-- **Project:** Sun Haven House Limit Mod
-- **GitHub:** [AliesterEroan](https://github.com/AliesterEroan)
-- **Nexus Mods:** [GerardDelon](https://www.nexusmods.com/profile/GerardDelon)
-- **Issues:** [Issue Tracker]
+### Game references (not redistributed)
+- `Assembly-CSharp.dll`, `UnityEngine*.dll` from the local Sun Haven install
 
 ---
 
-**Built with ❤️ by Aliester Eroan**
+## ⚠️ Limitations
+
+- **Game version** - built and tested against Sun Haven v3.1.3b; a game update that changes the patched methods may break it (the plugin logs an error per missing method rather than crashing).
+- **UI** - house numbers beyond the original limit may not display correctly.
+- **Performance** - very high limits (1000+) can degrade large towns.
+- **Multiplayer** - all players should run the same mod for consistent limits.
+- **Testing** - verified by in-game use on the author's install; there is no automated test suite.
+
+---
+
+## 📜 License
+
+No LICENSE file is present in this repository — **all rights reserved** by the author.
+
+---
+
+## 🙏 Acknowledgments
+
+- **BepInEx team** — the modding framework this plugin runs on
+- **Harmony team** — the runtime patching library
+- **Pixelated Milk / Sun Haven team** — the game being modded
+- **Sun Haven modding community** — techniques and inspiration
+
+---
+
+## 📧 Contact
+
+- **GitHub**: [AliesterEroan](https://github.com/AliesterEroan)
+- **Nexus Mods**: [GerardDelon](https://www.nexusmods.com/profile/GerardDelon)
+
+---
+
+*Built by Aliester Eroan.*
